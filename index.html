@@ -1518,8 +1518,12 @@
       overlay.classList.add('show');
       confetti();
       totalMirEarned += reward;
-      // 더블찬스 모달
-      setTimeout(() => showDouble(reward), 800);
+      // 첫 스핀만 더블찬스, 이후는 토스트만
+      if (!spun) {
+        setTimeout(() => showDouble(reward), 800);
+      } else {
+        showToast('룰렛 당첨!', reward);
+      }
 
       // Mark today done
       const todayDay = document.querySelector('.day.now');
