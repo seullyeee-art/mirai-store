@@ -138,6 +138,28 @@
     border: 1px solid rgba(20,195,145,0.1);
   }
   .max-badge-img { display: none; }
+
+  /* Sparkles */
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #ffd700;
+    box-shadow: 0 0 6px #ffd700, 0 0 12px rgba(255,215,0,0.3);
+    animation: sparkle 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .sparkle:nth-child(2) { width: 3px; height: 3px; animation-delay: 0.4s; }
+  .sparkle:nth-child(3) { width: 5px; height: 5px; animation-delay: 0.8s; }
+  .sparkle:nth-child(4) { width: 3px; height: 3px; animation-delay: 1.2s; }
+  .sparkle:nth-child(5) { width: 4px; height: 4px; animation-delay: 1.6s; }
+  .sparkle:nth-child(6) { width: 2px; height: 2px; animation-delay: 0.6s; }
+  .sparkle:nth-child(7) { width: 3px; height: 3px; animation-delay: 1s; }
+  .sparkle:nth-child(8) { width: 4px; height: 4px; animation-delay: 1.4s; }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
   .max-card::after {
     content: '';
     position: absolute;
@@ -711,6 +733,14 @@
   </div>
   <div class="max-card ai d3">
     <img class="max-badge-img" src="images/max.png" alt="MAX">
+    <div class="sparkle" style="top:12%;left:15%"></div>
+    <div class="sparkle" style="top:60%;left:85%"></div>
+    <div class="sparkle" style="top:25%;left:70%"></div>
+    <div class="sparkle" style="top:75%;left:30%"></div>
+    <div class="sparkle" style="top:40%;left:92%"></div>
+    <div class="sparkle" style="top:8%;left:50%"></div>
+    <div class="sparkle" style="top:85%;left:65%"></div>
+    <div class="sparkle" style="top:50%;left:10%"></div>
     <div class="max-top">
       <img src="images/380.png" width="28" height="28" alt="왕관" style="object-fit:contain;">
       <span class="max-name">MAX</span>
