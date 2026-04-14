@@ -178,6 +178,14 @@
   }
   .max-icon svg { width: 13px; height: 13px; fill: white; }
   .max-name { font-size: 16px; font-weight: 900; color: var(--label-strong); }
+  .max-timer-badge {
+    margin-left: auto;
+    font-size: 11px; font-weight: 700;
+    color: #ffd700;
+    background: rgba(255,215,0,0.1);
+    padding: 4px 10px; border-radius: 8px;
+    white-space: nowrap;
+  }
   .max-crown {
     position: absolute; top: -4px; right: 12px;
     font-size: 36px;
@@ -790,6 +798,7 @@
     <div class="max-top">
       <img src="images/380.png" width="28" height="28" alt="왕관" style="object-fit:contain;">
       <span class="max-name">MAX</span>
+      <span class="max-timer-badge">첫구독 할인 <span id="maxTimer">24:00:00</span></span>
     </div>
     <div class="max-tags">
       <span class="max-tag">💬 무제한 대화 (성능에 특화)</span>
@@ -1108,6 +1117,19 @@
     const t = document.getElementById('maxToggle');
     t.childNodes[0].textContent = t.classList.contains('open') ? '접기 ' : '혜택 보기 ';
   }
+
+  // MAX 타이머 (24시간 카운트다운)
+  let maxSeconds = 24 * 60 * 60;
+  function updateMaxTimer() {
+    const h = Math.floor(maxSeconds / 3600);
+    const m = Math.floor((maxSeconds % 3600) / 60);
+    const s = maxSeconds % 60;
+    document.getElementById('maxTimer').textContent =
+      String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    if (maxSeconds > 0) maxSeconds--;
+  }
+  updateMaxTimer();
+  setInterval(updateMaxTimer, 1000);
 
   function pop(el) {
     el.style.animation='none'; el.offsetHeight;
