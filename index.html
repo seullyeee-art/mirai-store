@@ -50,7 +50,7 @@
   }
 
   .frame {
-    width: 100%; max-width: 430px; min-height: 100dvh;
+    width: 100%; max-width: 640px; min-height: 100dvh;
     position: relative; padding-bottom: 60px;
     background:
       radial-gradient(ellipse 500px 500px at 30% 5%, rgba(20, 195, 145, 0.18) 0%, transparent 60%),
@@ -692,6 +692,34 @@
 
   @keyframes mirFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
   .mf { animation: mirFloat 2.5s ease-in-out infinite; }
+
+  /* ═══ DESKTOP ═══ */
+  @media (min-width: 640px) {
+    .frame { max-width: 640px; padding-left: 24px; padding-right: 24px; }
+    .header { padding: 20px 24px 14px; }
+    .banner { margin: 0 0 20px; padding: 22px 28px; }
+    .sec-hd { padding: 20px 0 10px; }
+    .sec-hd.col { padding-bottom: 16px; }
+    .max-card { margin: 0 0 20px; padding: 22px 24px 18px; }
+    .pkgs { padding: 0; }
+    .grid3 { gap: 14px; margin-bottom: 22px; }
+    .card { padding: 18px 10px 14px; border-radius: 18px; }
+    .mir-pile { width: 64px; height: 58px; }
+    .amt { font-size: 15px; }
+    .pbtn { padding: 10px 0; font-size: 13px; }
+    .free-hd { margin: 28px 0 16px; }
+    .daily { margin: 0; padding: 22px 18px; }
+    .earn { margin: 20px 0 0; gap: 14px; }
+    .ecard { padding: 20px; border-radius: 18px; }
+    .alist { margin: 20px 0 0; border-radius: 22px; }
+    .aitem { padding: 18px 20px; }
+    .hist-row { margin: 20px 0 0; }
+    .footer { margin: 36px 0 0; }
+    .roulette-wrap { width: 260px; height: 260px; margin: 12px auto 22px; }
+    .roulette-wheel { width: 240px; height: 240px; }
+    .roulette-wheel canvas { width: 240px; height: 240px; }
+    .bs { max-width: 480px; }
+  }
 </style>
 </head>
 <body>
