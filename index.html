@@ -1038,11 +1038,13 @@
       `;
       document.body.appendChild(c);
       requestAnimationFrame(() => {
-        c.style.transition = `all ${dur}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-        c.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-        c.style.opacity = '0';
+        requestAnimationFrame(() => {
+          c.style.transition = `all ${dur}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+          c.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+          c.style.opacity = '0';
+        });
       });
-      setTimeout(() => c.remove(), dur * 1000 + 100);
+      setTimeout(() => c.remove(), dur * 1000 + 200);
     }
   }
 
