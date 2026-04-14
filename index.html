@@ -161,6 +161,7 @@
 
   /* ═══ SECTION HEADER ═══ */
   .sec-hd { padding: 16px 16px 8px; display: flex; align-items: center; justify-content: space-between; }
+  .sec-hd.col { flex-direction: column; align-items: flex-start; padding-bottom: 12px; }
   .sec-hd h2 { font-size: 17px; font-weight: 800; color: var(--label-strong); }
   .sec-hd a { font-size: 12px; font-weight: 500; color: var(--label-alt); text-decoration: none; }
   .sec-hd a:active { color: var(--label-neutral); }
@@ -633,9 +634,9 @@
   </div>
 
   <!-- 미르 구매 -->
-  <div class="sec-hd ai d4">
+  <div class="sec-hd col ai d4">
     <h2>미르 구매</h2>
-    <p>구독 없이 필요한 만큼만 사용하고 싶다면 (채팅마다 미르가 차감돼요)</p>
+    <p>구독 없이 필요한 만큼만 사용하고 싶다면<br>(채팅마다 미르가 차감돼요)</p>
   </div>
   <div class="pkgs">
     <div class="grid3">
@@ -694,7 +695,7 @@
           </svg>
         </div>
         <div class="amt">8,000 미르</div>
-        <div class="bns">+20% · +1,600 보너스</div>
+        <div class="bns">+ 1,600 보너스</div>
         <button class="pbtn">US$39.99</button>
       </div>
       <!-- 16,000 -->
@@ -709,7 +710,7 @@
           </svg>
         </div>
         <div class="amt">16,000 미르</div>
-        <div class="bns">+20% · +3,200 보너스</div>
+        <div class="bns">+ 3,200 보너스</div>
         <button class="pbtn">US$79.99</button>
       </div>
       <!-- 32,000 -->
@@ -725,7 +726,7 @@
           </svg>
         </div>
         <div class="amt">32,000 미르</div>
-        <div class="bns">+25% · +8,000 보너스</div>
+        <div class="bns">+ 8,000 보너스</div>
         <button class="pbtn">US$149.99</button>
       </div>
     </div>
