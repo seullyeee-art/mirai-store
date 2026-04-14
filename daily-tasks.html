@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>일일 작업</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+  * {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :root {
+    --primary-normal: #14c391;
+    --primary-strong: #14c092;
+    --primary-heavy: #13bb8f;
+
+    --label-normal: #f7f7f8;
+    --label-strong: #ffffff;
+    --label-neutral: rgba(194, 196, 200, 0.88);
+    --label-alternative: rgba(174, 176, 182, 0.61);
+    --label-assistive: rgba(174, 176, 182, 0.28);
+    --label-disable: rgba(152, 155, 162, 0.16);
+
+    --bg-normal: #1b1c1e;
+    --bg-normal-alt: #0f0f10;
+
+    --line-normal: rgba(112, 115, 124, 0.32);
+    --line-alternative: rgba(112, 115, 124, 0.22);
+    --line-solid-normal: #37383c;
+    --line-solid-alt: #2e2f33;
+
+    --fill-normal: rgba(112, 115, 124, 0.22);
+    --fill-strong: rgba(112, 115, 124, 0.28);
+    --fill-alternative: rgba(112, 115, 124, 0.12);
+
+    --status-negative: #ff6363;
+    --status-cautionary: #ffa938;
+    --status-positive: #1ed45a;
+
+    --static-white: #ffffff;
+    --static-black: #000000;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100dvh;
+    background: var(--bg-normal-alt);
+    display: flex; justify-content: center;
+    overflow-x: hidden;
+    color: var(--label-normal);
+  }
+
+  .phone-frame {
+    width: 100%; max-width: 430px;
+    min-height: 100dvh;
+    background: var(--bg-normal);
+    padding-bottom: 40px;
+  }
+
+  /* === HEADER === */
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px 12px;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: rgba(27, 28, 30, 0.8);
+    border-bottom: 1px solid var(--line-alternative);
+  }
+  .back-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--line-solid-normal);
+    background: var(--fill-alternative);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    color: var(--label-normal); text-decoration: none;
+  }
+  .back-btn:active { transform: scale(0.92); background: var(--fill-strong); }
+
+  .header-title {
+    font-size: 17px; font-weight: 700;
+    color: var(--label-strong); letter-spacing: -0.3px;
+  }
+
+  .mir-balance {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--fill-normal);
+    padding: 6px 14px 6px 8px; border-radius: 20px;
+    border: 1px solid var(--line-solid-normal);
+  }
+  .mir-balance span { font-size: 14px; font-weight: 700; color: var(--primary-normal); }
+  .mir-glow { filter: drop-shadow(0 2px 6px rgba(20, 195, 145, 0.4)); }
+
+  /* === PROGRESS SECTION === */
+  .progress-section {
+    padding: 20px 20px 16px;
+  }
+  .progress-title {
+    font-size: 18px; font-weight: 800;
+    color: var(--label-strong); letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  .progress-sub {
+    font-size: 13px; font-weight: 400;
+    color: var(--label-alternative); margin-bottom: 16px;
+  }
+
+  .progress-bar-wrap {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .progress-track {
+    flex: 1; height: 6px;
+    background: var(--fill-normal);
+    border-radius: 3px; overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--primary-heavy), var(--primary-normal));
+    transition: width 0.6s ease;
+    box-shadow: 0 0 8px rgba(20, 195, 145, 0.4);
+  }
+  .progress-reward {
+    display: flex; align-items: center; gap: 4px;
+    flex-shrink: 0;
+  }
+  .progress-reward span {
+    font-size: 14px; font-weight: 700; color: var(--primary-normal);
+  }
+
+  /* === TASK LIST === */
+  .task-list {
+    padding: 0 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .task-item {
+    display: flex; align-items: center;
+    padding: 16px;
+    background: var(--fill-alternative);
+    border-radius: 16px;
+    border: 1px solid var(--line-solid-normal);
+    gap: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .task-item:active { background: var(--fill-normal); transform: scale(0.99); }
+  .task-item.completed {
+    opacity: 0.5;
+  }
+
+  .task-info { flex: 1; min-width: 0; }
+  .task-name {
+    font-size: 14px; font-weight: 600;
+    color: var(--label-strong); margin-bottom: 2px;
+  }
+  .task-item.completed .task-name {
+    text-decoration: line-through;
+    color: var(--label-neutral);
+  }
+  .task-reward {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 13px; font-weight: 600;
+    color: var(--primary-normal);
+  }
+  .task-item.completed .task-reward {
+    color: var(--label-assistive);
+  }
+  .task-reward svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .task-btn {
+    padding: 8px 16px; border-radius: 10px;
+    border: 1px solid var(--line-solid-normal);
+    background: var(--fill-normal);
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--label-normal); cursor: pointer;
+    transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
+  }
+  .task-btn:active { background: var(--fill-strong); transform: scale(0.96); }
+  .task-item.completed .task-btn {
+    background: rgba(20, 195, 145, 0.1);
+    border-color: rgba(20, 195, 145, 0.2);
+    color: var(--primary-normal);
+    pointer-events: none;
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeInUp 0.45s ease-out both; }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.1s; }
+  .d3 { animation-delay: 0.14s; }
+  .d4 { animation-delay: 0.18s; }
+  .d5 { animation-delay: 0.22s; }
+  .d6 { animation-delay: 0.26s; }
+  .d7 { animation-delay: 0.3s; }
+  .d8 { animation-delay: 0.34s; }
+  .d9 { animation-delay: 0.38s; }
+  .d10 { animation-delay: 0.42s; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <span class="header-title">일일 작업</span>
+    <div class="mir-balance">
+      <svg class="mir-glow" width="22" height="22" viewBox="0 0 32 32">
+        <defs>
+          <linearGradient id="mirG" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#5fffcf"/>
+            <stop offset="40%" style="stop-color:#14c391"/>
+            <stop offset="100%" style="stop-color:#0e9b73"/>
+          </linearGradient>
+          <linearGradient id="mirS" x1="20%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0.55)"/>
+            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+          </linearGradient>
+        </defs>
+        <polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/>
+        <polygon points="16,3 20,10 16,26 12,10" fill="url(#mirS)"/>
+        <polygon points="16,3 6,10 12,10" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span>95</span>
+    </div>
+  </header>
+
+  <!-- Progress -->
+  <div class="progress-section animate-in d1">
+    <div class="progress-title">작업 진행 (0 / 8)</div>
+    <div class="progress-sub">30 미르 보너스를 받기 위해 모든 임무를 완성하세요!</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="progress-reward">
+        <svg class="mir-glow" width="20" height="20" viewBox="0 0 32 32">
+          <polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/>
+          <polygon points="16,3 20,10 16,26 12,10" fill="url(#mirS)"/>
+        </svg>
+        <span>30</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task List -->
+  <div class="task-list">
+
+    <div class="task-item animate-in d2" data-reward="3">
+      <div class="task-info">
+        <div class="task-name">대화 10라운드 완료</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +3
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d3" data-reward="8">
+      <div class="task-info">
+        <div class="task-name">대화 30라운드 완료</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +8
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d4" data-reward="15">
+      <div class="task-info">
+        <div class="task-name">대화 50라운드 완료</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +15
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d5" data-reward="10">
+      <div class="task-info">
+        <div class="task-name">호감도 레벨 5회 업그레이드</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +10
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d6" data-reward="20">
+      <div class="task-info">
+        <div class="task-name">호감도 레벨 15회 업그레이드</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +20
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d7" data-reward="10">
+      <div class="task-info">
+        <div class="task-name">채팅 중 선물 3개 열기</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +10
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d8" data-reward="15">
+      <div class="task-info">
+        <div class="task-name">오늘 아무 미르 패키나 구매하기</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +15
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+    <div class="task-item animate-in d9" data-reward="35">
+      <div class="task-info">
+        <div class="task-name">모든 일일 작업 완료 보너스</div>
+        <div class="task-reward">
+          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          +35
+        </div>
+      </div>
+      <button class="task-btn" onclick="completeTask(this)">완성하기</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  let completedCount = 0;
+  const totalTasks = 8;
+
+  function completeTask(btn) {
+    const item = btn.closest('.task-item');
+    if (item.classList.contains('completed')) return;
+
+    item.classList.add('completed');
+    btn.textContent = '완료';
+    completedCount++;
+
+    // Update progress
+    const pct = (completedCount / totalTasks) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.querySelector('.progress-title').textContent = `작업 진행 (${completedCount} / ${totalTasks})`;
+
+    // Animate
+    item.style.transform = 'scale(0.98)';
+    setTimeout(() => { item.style.transform = ''; }, 200);
+  }
+</script>
+</body>
+</html>
