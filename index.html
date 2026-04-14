@@ -181,10 +181,15 @@
   .max-timer-badge {
     margin-left: auto;
     font-size: 11px; font-weight: 700;
-    color: #ff6b9d;
-    background: rgba(255,107,157,0.1);
-    padding: 4px 10px; border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff3b6f, #ff6b9d);
+    padding: 5px 10px; border-radius: 8px;
     white-space: nowrap;
+    animation: timerPulse 2s ease-in-out infinite;
+  }
+  @keyframes timerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
   }
   .max-crown {
     position: absolute; top: -4px; right: 12px;
