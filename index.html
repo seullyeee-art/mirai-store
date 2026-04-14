@@ -564,8 +564,12 @@
   .abtn svg { width: 14px; height: 14px; }
 
   /* ═══ HISTORY ═══ */
-  .hist {
+  .hist-row {
+    display: flex; gap: 10px;
     margin: 16px 16px 0;
+  }
+  .hist {
+    flex: 1; margin: 0;
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px; border-radius: 16px;
     background: linear-gradient(160deg, var(--bg-card-alt), var(--bg-card));
@@ -889,15 +893,16 @@
     </div>
   </div>
 
-  <!-- History -->
-  <div class="hist ai d11">
-    <span class="tt">미르 내역</span>
-    <button class="vb">보기</button>
-  </div>
-
-  <div class="hist ai d11">
-    <span class="tt">구독 관리</span>
-    <button class="vb">관리</button>
+  <!-- History + 구독관리 -->
+  <div class="hist-row ai d11">
+    <div class="hist">
+      <span class="tt">미르 내역</span>
+      <button class="vb">보기</button>
+    </div>
+    <div class="hist">
+      <span class="tt">구독 관리</span>
+      <button class="vb">관리</button>
+    </div>
   </div>
 
   <!-- Footer -->
