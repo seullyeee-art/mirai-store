@@ -723,7 +723,7 @@
     width: 300px;
     background: transparent;
     border-radius: 20px;
-    padding: 20px 24px 16px;
+    padding: 20px 24px 20px;
     z-index: 9999;
     opacity: 0; pointer-events: none;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -739,10 +739,14 @@
     font-size: 13px; color: var(--label-alt);
     margin-bottom: 16px; line-height: 1.5;
   }
-  .dc-img {
-    margin-bottom: 16px;
+  .dc-visual {
+    height: 100px;
     display: flex; align-items: center; justify-content: center;
-    min-height: 80px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .dc-img {
+    display: flex; align-items: center; justify-content: center;
   }
   .dc-info {
     display: flex; flex-direction: column; gap: 4px;
@@ -786,7 +790,7 @@
     background:
       radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%),
       linear-gradient(160deg, #ffd700, #daa520, #b8860b);
-    box-shadow: 0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3);
+    box-shadow: 0 0 0 4px #967a50, inset 0 2px 6px rgba(255,255,255,0.25);
   }
   .dc-coin .front::before {
     content: ''; position: absolute; inset: 8px;
@@ -891,13 +895,14 @@
 <div class="dc" id="dcModal">
   <div class="dc-header">더블찬스!</div>
   <div class="dc-sub2">도전하시면 미르가 <strong>2배!</strong><br>(단 꽝!은 당첨된 미르를 잃을 수 있어요.)</div>
-  <div class="dc-img" id="dcImg"><img src="images/x2.png" width="160" height="80" alt="×2" style="object-fit:contain;"></div>
-  <!-- 동전 (숨김, 도전 시 표시) -->
-  <div class="dc-coin-scene" id="dcCoinScene" style="display:none;">
-    <div class="dc-coin-wrap" id="dcCoinWrap">
-      <div class="dc-coin" id="dcCoin">
-        <div class="face front"><span class="lbl">WIN</span><span class="val">×2</span></div>
-        <div class="face back"><span class="lbl">LOSE</span><span class="val">×0</span></div>
+  <div class="dc-visual">
+    <div class="dc-img" id="dcImg"><img src="images/x2.png" width="160" height="80" alt="×2" style="object-fit:contain;"></div>
+    <div class="dc-coin-scene" id="dcCoinScene" style="display:none;">
+      <div class="dc-coin-wrap" id="dcCoinWrap">
+        <div class="dc-coin" id="dcCoin">
+          <div class="face front"><span class="lbl">WIN</span><span class="val">×2</span></div>
+          <div class="face back"><span class="lbl">LOSE</span><span class="val">×0</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1211,8 +1216,8 @@
     document.getElementById('dcCoinScene').style.display = 'none';
     // 동전 리셋
     const fc = document.querySelector('.dc-coin .front');
-    fc.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
-    fc.style.boxShadow = '0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3)';
+    fc.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #d4b896, #b89b71, #967a50)';
+    fc.style.boxShadow = '0 0 0 4px #967a50, inset 0 2px 6px rgba(255,255,255,0.25)';
     fc.querySelector('.val').textContent = '×2';
     fc.querySelector('.lbl').textContent = 'WIN';
     document.getElementById('dcCoin').style.transform = '';
@@ -1247,8 +1252,8 @@
 
     // 동전 리셋
     const frontReset = coin.querySelector('.front');
-    frontReset.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
-    frontReset.style.boxShadow = '0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3)';
+    frontReset.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #d4b896, #b89b71, #967a50)';
+    frontReset.style.boxShadow = '0 0 0 4px #967a50, inset 0 2px 6px rgba(255,255,255,0.25)';
     frontReset.querySelector('.val').textContent = '×2';
     frontReset.querySelector('.lbl').textContent = 'WIN';
     coin.style.transform = '';
@@ -1278,7 +1283,7 @@
         // 착지 후 결과 표시
         const front = coin.querySelector('.front');
         if (win) {
-          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
+          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #d4b896, #b89b71, #967a50)';
           front.querySelector('.val').textContent = '×2';
           front.querySelector('.lbl').textContent = 'WIN';
           dcReward *= 2;
