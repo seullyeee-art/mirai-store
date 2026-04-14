@@ -1521,7 +1521,9 @@
       confetti();
       totalMirEarned += reward;
       // 첫 스핀만 더블찬스, 이후는 토스트만
-      if (!spun) {
+      const isFirstSpin = !spun;
+      if (isFirstSpin) {
+        spun = true;
         setTimeout(() => showDouble(reward), 800);
       } else {
         showToast('룰렛 당첨!', reward);
@@ -1539,8 +1541,7 @@
 
       spinning = false;
 
-      if (!spun) {
-        spun = true;
+      if (isFirstSpin) {
         btn.className = 'dbtn ad-retry';
         txt.textContent = '🎬 광고보고 다시돌리기 (0/3)';
         btn.disabled = false;
