@@ -248,14 +248,12 @@
   .daily-hd .sub { font-size: 11px; color: var(--label-alt); margin-left: 4px; }
 
   .days {
-    display: flex; gap: 6px; overflow-x: auto;
-    padding-bottom: 4px; margin-bottom: 14px;
-    scrollbar-width: none;
+    display: flex; gap: 4px;
+    margin-bottom: 14px;
   }
-  .days::-webkit-scrollbar { display: none; }
 
   .day {
-    flex: 1; min-width: 46px;
+    flex: 1; min-width: 0;
     display: flex; flex-direction: column; align-items: center; gap: 5px;
     padding: 10px 4px; border-radius: 12px;
     background: rgba(255,255,255,0.02);
