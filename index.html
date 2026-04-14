@@ -711,31 +711,34 @@
   }
   .dc-overlay.show { opacity: 1; pointer-events: auto; }
   .dc {
-    position: fixed; bottom: 0; left: 50%;
-    transform: translateX(-50%) translateY(100%);
-    width: 100%; max-width: 430px;
-    background: rgba(30,30,34,0.92);
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 300px;
+    background: rgba(30,30,34,0.95);
     backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    border-radius: 20px 20px 0 0;
-    padding: 12px 24px 36px;
+    border-radius: 20px;
+    padding: 24px 24px 20px;
     z-index: 9999;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0; pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
   }
-  .dc.show { transform: translateX(-50%) translateY(0); }
+  .dc.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
 
-  .dc-handle {
-    width: 36px; height: 4px; border-radius: 2px;
-    background: rgba(255,255,255,0.15);
-    margin: 0 auto 20px;
+  .dc-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    color: var(--primary); background: rgba(20,195,145,0.1);
+    padding: 3px 10px; border-radius: 6px;
+    margin-bottom: 16px;
   }
   .dc-header {
-    font-size: 22px; font-weight: 900; color: var(--label-strong);
+    font-size: 20px; font-weight: 900; color: var(--label-strong);
     margin-bottom: 4px;
   }
   .dc-desc {
-    font-size: 14px; color: var(--label-alt);
-    margin-bottom: 20px;
+    font-size: 13px; color: var(--label-alt);
+    margin-bottom: 16px; line-height: 1.5;
   }
   .dc-img {
     font-size: 64px; font-weight: 900;
@@ -780,6 +783,10 @@
     background: rgba(255,255,255,0.06);
     font-family: inherit; font-size: 15px; font-weight: 700;
     color: var(--label-strong); cursor: pointer;
+  }
+  .dc-dismiss {
+    font-size: 11px; color: var(--label-assist);
+    margin-top: 12px;
   }
 
   /* ═══ DESKTOP ═══ */
@@ -841,20 +848,17 @@
 <!-- Double Chance -->
 <div class="dc-overlay" id="dcOverlay"></div>
 <div class="dc" id="dcModal">
-  <div class="dc-handle"></div>
-  <div class="dc-header">더블찬스!</div>
-  <div class="dc-desc" id="dcDesc">묻고 더블로 가시겠습니까?</div>
+  <div class="dc-tag">랜덤이벤트</div>
   <div class="dc-img" id="dcImg">×2</div>
-  <div class="dc-info">
-    <span>상품이 <strong>2배</strong>, 미르가 <strong>2배</strong></span>
-    <span class="dc-pct">확률 50%</span>
-  </div>
+  <div class="dc-header">더블찬스!</div>
+  <div class="dc-desc" id="dcDesc">묻고 더블로 가시겠습니까?<br>미르가 <strong>2배</strong>, 확률 <strong>50%</strong></div>
   <div class="dc-result-text" id="dcResult"></div>
   <div class="dc-btns" id="dcBtns">
     <button class="dc-btn-double" onclick="tryDouble()">더블 도전</button>
     <button class="dc-btn-keep" onclick="keepMir()">괜찮아요</button>
   </div>
   <button class="dc-btn-close" id="dcClose" style="display:none" onclick="closeDouble()">확인</button>
+  <div class="dc-dismiss">이 창을 닫으면 혜택이 사라집니다</div>
 </div>
 
 <!-- Bottom Sheet -->
