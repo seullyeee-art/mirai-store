@@ -725,13 +725,6 @@
   }
   .dc.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
 
-  .dc-tag {
-    display: inline-block;
-    font-size: 11px; font-weight: 700;
-    color: var(--primary); background: rgba(20,195,145,0.1);
-    padding: 3px 10px; border-radius: 6px;
-    margin-bottom: 16px;
-  }
   .dc-header {
     font-size: 20px; font-weight: 900; color: var(--label-strong);
     margin-bottom: 4px;
@@ -784,14 +777,11 @@
     font-family: inherit; font-size: 15px; font-weight: 700;
     color: var(--label-strong); cursor: pointer;
   }
-  .dc-chance-row {
-    font-size: 11px; color: var(--label-assist);
-    margin-bottom: 20px;
+  .dc-sub2 {
+    font-size: 13px; color: var(--label-neutral);
+    margin-bottom: 20px; line-height: 1.6;
   }
-  .dc-dismiss {
-    font-size: 11px; color: var(--label-assist);
-    margin-top: 12px;
-  }
+  .dc-sub2 strong { color: var(--primary); }
 
   /* ═══ DESKTOP ═══ */
   @media (min-width: 768px) {
@@ -852,18 +842,16 @@
 <!-- Double Chance -->
 <div class="dc-overlay" id="dcOverlay"></div>
 <div class="dc" id="dcModal">
-  <div class="dc-tag">랜덤이벤트 패키지</div>
-  <div class="dc-img" id="dcImg">×2</div>
   <div class="dc-header">더블찬스!</div>
-  <div class="dc-desc" id="dcDesc">묻고 더블로 가시겠습니까?<br>상품이 <strong>2배</strong>, 미르가 <strong>2배</strong></div>
-  <div class="dc-chance-row">(단, 잃을 확률도 있을 수 있어요.)</div>
+  <div class="dc-desc" id="dcDesc">묻고 더블로 가시겠습니까?</div>
+  <div class="dc-sub2">도전하시면 미르가 <strong>2배!</strong><br>(단 꽝!은 당첨된 미르를 잃을 수 있어요.)</div>
+  <div class="dc-img" id="dcImg">×2</div>
   <div class="dc-result-text" id="dcResult"></div>
   <div class="dc-btns" id="dcBtns">
-    <button class="dc-btn-double" onclick="tryDouble()">도전하고 최대 2배 받기</button>
+    <button class="dc-btn-double" onclick="tryDouble()">🎬 광고보고 더블 도전</button>
     <button class="dc-btn-keep" onclick="keepMir()">괜찮아요</button>
   </div>
   <button class="dc-btn-close" id="dcClose" style="display:none" onclick="closeDouble()">확인</button>
-  <div class="dc-dismiss">이 창을 닫으면 혜택이 사라집니다</div>
 </div>
 
 <!-- Bottom Sheet -->
@@ -1170,9 +1158,9 @@
     document.getElementById('dcClose').style.display = 'none';
     // 첫 스핀이 아니면 광고 문구
     if (spun) {
-      document.getElementById('dcDesc').innerHTML = '🎬 광고를 시청하고 더블에 도전하세요!<br>상품이 <strong>2배</strong>, 미르가 <strong>2배</strong>';
+      document.getElementById('dcDesc').textContent = '묻고 더블로 가시겠습니까?';
     } else {
-      document.getElementById('dcDesc').innerHTML = '묻고 더블로 가시겠습니까?<br>상품이 <strong>2배</strong>, 미르가 <strong>2배</strong>';
+      document.getElementById('dcDesc').textContent = '묻고 더블로 가시겠습니까?';
     }
     document.getElementById('dcOverlay').classList.add('show');
     document.getElementById('dcModal').classList.add('show');
