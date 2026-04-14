@@ -50,7 +50,7 @@
   }
 
   .frame {
-    width: 100%; max-width: 640px; min-height: 100dvh;
+    width: 100%; max-width: 960px; min-height: 100dvh;
     position: relative; padding-bottom: 60px;
     background:
       radial-gradient(ellipse 500px 500px at 30% 5%, rgba(20, 195, 145, 0.18) 0%, transparent 60%),
@@ -694,31 +694,54 @@
   .mf { animation: mirFloat 2.5s ease-in-out infinite; }
 
   /* ═══ DESKTOP ═══ */
-  @media (min-width: 640px) {
-    .frame { max-width: 640px; padding-left: 24px; padding-right: 24px; }
-    .header { padding: 20px 24px 14px; }
-    .banner { margin: 0 0 20px; padding: 22px 28px; }
-    .sec-hd { padding: 20px 0 10px; }
+  @media (min-width: 768px) {
+    .frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
+    .header { padding: 20px 40px 14px; }
+    .header h1 { font-size: 20px; }
+    .banner { margin: 0 0 24px; padding: 28px 36px; border-radius: 16px; }
+    .banner .main { font-size: 28px; }
+    .sec-hd { padding: 28px 0 12px; }
+    .sec-hd h2 { font-size: 20px; }
     .sec-hd.col { padding-bottom: 16px; }
-    .max-card { margin: 0 0 20px; padding: 22px 24px 18px; }
+    .max-card { margin: 0 0 24px; padding: 28px 32px 20px; border-radius: 20px; }
+    .max-name { font-size: 20px; }
+    .max-tags { gap: 10px; }
+    .max-tag { font-size: 14px; }
+    .max-cta { padding: 14px; font-size: 16px; }
     .pkgs { padding: 0; }
-    .grid3 { gap: 14px; margin-bottom: 22px; }
-    .card { padding: 18px 10px 14px; border-radius: 18px; }
-    .mir-pile { width: 64px; height: 58px; }
-    .amt { font-size: 15px; }
-    .pbtn { padding: 10px 0; font-size: 13px; }
-    .free-hd { margin: 28px 0 16px; }
-    .daily { margin: 0; padding: 22px 18px; }
-    .earn { margin: 20px 0 0; gap: 14px; }
-    .ecard { padding: 20px; border-radius: 18px; }
+    .grid3 { gap: 16px; margin-bottom: 24px; }
+    .card { padding: 24px 14px 16px; border-radius: 20px; }
+    .mir-pile { width: 80px; height: 70px; }
+    .prem .mir-pile { width: 86px; height: 76px; }
+    .amt { font-size: 17px; }
+    .bns { font-size: 12px; }
+    .pbtn { padding: 12px 0; font-size: 14px; border-radius: 12px; }
+    .free-hd { margin: 32px 0 18px; font-size: 20px; }
+    .daily { margin: 0; padding: 28px 24px; border-radius: 20px; }
+    .daily-hd .tt { font-size: 17px; }
+    .day { padding: 14px 6px; border-radius: 14px; }
+    .day-n { font-size: 13px; }
+    .day-l { font-size: 10px; }
+    .dbtn { padding: 14px; font-size: 15px; min-height: 50px; }
+    .earn { margin: 20px 0 0; gap: 16px; }
+    .ecard { padding: 24px; border-radius: 20px; }
+    .ecard-t { font-size: 17px; }
+    .ebtn { padding: 10px; font-size: 14px; }
     .alist { margin: 20px 0 0; border-radius: 22px; }
-    .aitem { padding: 18px 20px; }
-    .hist-row { margin: 20px 0 0; }
-    .footer { margin: 36px 0 0; }
-    .roulette-wrap { width: 260px; height: 260px; margin: 12px auto 22px; }
-    .roulette-wheel { width: 240px; height: 240px; }
-    .roulette-wheel canvas { width: 240px; height: 240px; }
-    .bs { max-width: 480px; }
+    .aitem { padding: 20px 24px; }
+    .ainfo .at { font-size: 16px; }
+    .ainfo .ar { font-size: 13px; }
+    .abtn { padding: 8px 18px; font-size: 13px; }
+    .hist-row { margin: 20px 0 0; gap: 16px; }
+    .hist { padding: 20px; border-radius: 18px; }
+    .hist .tt { font-size: 16px; }
+    .footer { margin: 40px 0 0; }
+    .footer p { font-size: 12px; }
+    .roulette-wrap { width: 300px; height: 300px; margin: 16px auto 28px; }
+    .roulette-wheel { width: 280px; height: 280px; }
+    .bs { max-width: 520px; padding: 28px 32px 40px; }
+    .bs-title { font-size: 22px; }
+    .toast { font-size: 16px; padding: 14px 28px; }
   }
 </style>
 </head>
