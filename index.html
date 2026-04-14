@@ -137,6 +137,17 @@
       linear-gradient(145deg, var(--bg-card-alt), var(--bg-card));
     border: 1px solid rgba(20,195,145,0.1);
   }
+  .max-card::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 140px; height: 140px;
+    background: url('images/max.png') no-repeat center;
+    background-size: contain;
+    opacity: 0.06;
+    pointer-events: none;
+    transform: rotate(-10deg);
+  }
   .max-top { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
   .max-icon {
     width: 24px; height: 24px; border-radius: 6px;
