@@ -701,6 +701,81 @@
   @keyframes mirFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
   .mf { animation: mirFloat 2.5s ease-in-out infinite; }
 
+  /* ═══ DOUBLE CHANCE ═══ */
+  .dc-overlay {
+    position: fixed; inset: 0; z-index: 9998;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .dc-overlay.show { opacity: 1; pointer-events: auto; }
+  .dc {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 320px;
+    background: rgba(30,30,34,0.92);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border-radius: 24px;
+    padding: 32px 24px 24px;
+    z-index: 9999;
+    opacity: 0; pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+  }
+  .dc.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+  .dc-title {
+    font-size: 22px; font-weight: 900; color: var(--label-strong);
+    margin-bottom: 6px;
+  }
+  .dc-sub {
+    font-size: 13px; color: var(--label-alt);
+    margin-bottom: 20px; line-height: 1.5;
+  }
+  .dc-amount {
+    font-size: 36px; font-weight: 900;
+    margin-bottom: 6px;
+    transition: all 0.4s;
+  }
+  .dc-amount.pending { color: var(--label-strong); }
+  .dc-amount.win { color: var(--primary); }
+  .dc-amount.lose { color: var(--negative); text-decoration: line-through; }
+  .dc-chance {
+    font-size: 12px; font-weight: 600; color: var(--label-alt);
+    margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .dc-chance .pct {
+    background: rgba(255,107,157,0.1); color: #ff6b9d;
+    padding: 2px 8px; border-radius: 6px; font-weight: 700;
+  }
+  .dc-btns { display: flex; flex-direction: column; gap: 8px; }
+  .dc-btn-double {
+    width: 100%; padding: 14px; border-radius: 12px; border: none;
+    background: var(--label-strong);
+    font-family: inherit; font-size: 16px; font-weight: 800;
+    color: var(--bg-deep); cursor: pointer; transition: all 0.2s;
+  }
+  .dc-btn-double:active { transform: scale(0.98); opacity: 0.9; }
+  .dc-btn-keep {
+    width: 100%; padding: 12px; border: none; background: none;
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    color: var(--label-alt); cursor: pointer;
+  }
+  .dc-result-text {
+    font-size: 18px; font-weight: 800; margin-top: 8px; margin-bottom: 16px;
+    min-height: 28px;
+  }
+  .dc-result-text.win { color: var(--primary); }
+  .dc-result-text.lose { color: var(--negative); }
+  .dc-btn-close {
+    width: 100%; padding: 14px; border-radius: 12px; border: none;
+    background: rgba(255,255,255,0.06);
+    font-family: inherit; font-size: 15px; font-weight: 700;
+    color: var(--label-strong); cursor: pointer;
+  }
+
   /* ═══ DESKTOP ═══ */
   @media (min-width: 768px) {
     .frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
@@ -756,6 +831,21 @@
 <body>
 
 <div class="particles" id="pts"></div>
+
+<!-- Double Chance -->
+<div class="dc-overlay" id="dcOverlay"></div>
+<div class="dc" id="dcModal">
+  <div class="dc-title">더블찬스!</div>
+  <div class="dc-sub">묻고 더블로 가시겠습니까?</div>
+  <div class="dc-amount pending" id="dcAmount">+0 미르</div>
+  <div class="dc-chance">확률 <span class="pct">50%</span></div>
+  <div class="dc-btns" id="dcBtns">
+    <button class="dc-btn-double" onclick="tryDouble()">×2 더블!</button>
+    <button class="dc-btn-keep" onclick="keepMir()">그냥 받기</button>
+  </div>
+  <div class="dc-result-text" id="dcResult"></div>
+  <button class="dc-btn-close" id="dcClose" style="display:none" onclick="closeDouble()">확인</button>
+</div>
 
 <!-- Bottom Sheet -->
 <div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
@@ -1048,6 +1138,59 @@
     pc.appendChild(p);
   }
   // ═══ TOAST ═══
+  // ═══ DOUBLE CHANCE ═══
+  let dcReward = 0;
+
+  function showDouble(reward) {
+    dcReward = reward;
+    document.getElementById('dcAmount').textContent = '+' + reward + ' 미르';
+    document.getElementById('dcAmount').className = 'dc-amount pending';
+    document.getElementById('dcResult').textContent = '';
+    document.getElementById('dcResult').className = 'dc-result-text';
+    document.getElementById('dcBtns').style.display = 'flex';
+    document.getElementById('dcClose').style.display = 'none';
+    document.getElementById('dcOverlay').classList.add('show');
+    document.getElementById('dcModal').classList.add('show');
+  }
+
+  function tryDouble() {
+    const win = Math.random() < 0.5;
+    const btns = document.getElementById('dcBtns');
+    const amount = document.getElementById('dcAmount');
+    const result = document.getElementById('dcResult');
+    const closeBtn = document.getElementById('dcClose');
+
+    btns.style.display = 'none';
+
+    if (win) {
+      dcReward *= 2;
+      amount.textContent = '+' + dcReward + ' 미르';
+      amount.className = 'dc-amount win';
+      result.textContent = '🎉 더블 성공!';
+      result.className = 'dc-result-text win';
+      confetti();
+    } else {
+      dcReward = 0;
+      amount.textContent = '+0 미르';
+      amount.className = 'dc-amount lose';
+      result.textContent = '😢 아쉽게 실패...';
+      result.className = 'dc-result-text lose';
+    }
+
+    closeBtn.style.display = 'block';
+    showToast(win ? '더블 성공!' : '더블 실패', dcReward);
+  }
+
+  function keepMir() {
+    closeDouble();
+    showToast('미르 획득!', dcReward);
+  }
+
+  function closeDouble() {
+    document.getElementById('dcOverlay').classList.remove('show');
+    document.getElementById('dcModal').classList.remove('show');
+  }
+
   function showToast(msg, mir) {
     const t = document.createElement('div');
     t.className = 'toast';
@@ -1247,8 +1390,9 @@
       resultMir.textContent = '+' + reward;
       overlay.classList.add('show');
       confetti();
-      showToast('룰렛 당첨!', reward);
       totalMirEarned += reward;
+      // 더블찬스 모달
+      setTimeout(() => showDouble(reward), 800);
 
       // Mark today done
       const todayDay = document.querySelector('.day.now');
