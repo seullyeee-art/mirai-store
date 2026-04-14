@@ -734,14 +734,9 @@
     margin-bottom: 16px; line-height: 1.5;
   }
   .dc-img {
-    font-size: 64px; font-weight: 900;
-    color: var(--primary);
     margin-bottom: 16px;
-    text-shadow: 0 0 30px var(--primary-glow);
-    transition: all 0.4s;
+    display: flex; align-items: center; justify-content: center;
   }
-  .dc-img.win { color: var(--primary); }
-  .dc-img.lose { color: var(--negative); opacity: 0.5; }
   .dc-info {
     display: flex; flex-direction: column; gap: 4px;
     font-size: 13px; color: var(--label-neutral);
@@ -759,6 +754,51 @@
   .dc-result-text.win { color: var(--primary); }
   .dc-result-text.lose { color: var(--negative); }
   .dc-btns { display: flex; flex-direction: column; gap: 8px; }
+  /* 동전 in popup */
+  .dc-coin-scene {
+    width: 100px; height: 100px;
+    margin: 0 auto 16px;
+    perspective: 600px;
+  }
+  .dc-coin-wrap {
+    width: 100%; height: 100%;
+  }
+  .dc-coin {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  .dc-coin .face {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .dc-coin .front {
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%),
+      linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73);
+    box-shadow: 0 0 0 4px #0e9b73, inset 0 2px 6px rgba(255,255,255,0.25);
+  }
+  .dc-coin .front::before {
+    content: ''; position: absolute; inset: 8px;
+    border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15);
+  }
+  .dc-coin .back {
+    transform: rotateY(180deg);
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%),
+      linear-gradient(160deg, #ff8a8a, #ff6363, #e04040);
+    box-shadow: 0 0 0 4px #e04040, inset 0 2px 6px rgba(255,255,255,0.2);
+  }
+  .dc-coin .back::before {
+    content: ''; position: absolute; inset: 8px;
+    border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.12);
+  }
+  .dc-coin .val { font-size: 28px; font-weight: 900; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+  .dc-coin .lbl { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 2px; margin-bottom: 2px; }
+
   .dc-btn-double {
     width: 100%; padding: 14px; border-radius: 12px; border: none;
     background: linear-gradient(135deg, #14c391, #1ae0a8);
@@ -843,9 +883,17 @@
 <div class="dc-overlay" id="dcOverlay"></div>
 <div class="dc" id="dcModal">
   <div class="dc-header">더블찬스!</div>
-  <div class="dc-desc" id="dcDesc">묻고 더블로 가시겠습니까?</div>
   <div class="dc-sub2">도전하시면 미르가 <strong>2배!</strong><br>(단 꽝!은 당첨된 미르를 잃을 수 있어요.)</div>
-  <div class="dc-img" id="dcImg">×2</div>
+  <div class="dc-img" id="dcImg"><img src="images/x2.png" width="120" height="60" alt="×2" style="object-fit:contain;"></div>
+  <!-- 동전 (숨김, 도전 시 표시) -->
+  <div class="dc-coin-scene" id="dcCoinScene" style="display:none;">
+    <div class="dc-coin-wrap" id="dcCoinWrap">
+      <div class="dc-coin" id="dcCoin">
+        <div class="face front"><span class="lbl">WIN</span><span class="val">×2</span></div>
+        <div class="face back"><span class="lbl">LOSE</span><span class="val">×0</span></div>
+      </div>
+    </div>
+  </div>
   <div class="dc-result-text" id="dcResult"></div>
   <div class="dc-btns" id="dcBtns">
     <button class="dc-btn-double" onclick="tryDouble()">🎬 광고보고 더블 도전</button>
@@ -1150,17 +1198,25 @@
 
   function showDouble(reward) {
     dcReward = reward;
-    document.getElementById('dcImg').textContent = '×2';
+    document.getElementById('dcImg').innerHTML = '<img src="images/x2.png" width="120" height="60" alt="×2" style="object-fit:contain;">';
     document.getElementById('dcImg').className = 'dc-img';
+    document.getElementById('dcImg').style.display = '';
+    document.getElementById('dcCoinScene').style.display = 'none';
+    // 동전 리셋
+    const fc = document.querySelector('.dc-coin .front');
+    fc.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%), linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73)';
+    fc.style.boxShadow = '0 0 0 4px #0e9b73, inset 0 2px 6px rgba(255,255,255,0.25)';
+    fc.querySelector('.val').textContent = '×2';
+    fc.querySelector('.lbl').textContent = 'WIN';
+    document.getElementById('dcCoin').style.transform = '';
+    document.getElementById('dcCoinWrap').style.transform = '';
     document.getElementById('dcResult').textContent = '';
     document.getElementById('dcResult').className = 'dc-result-text';
     document.getElementById('dcBtns').style.display = 'flex';
     document.getElementById('dcClose').style.display = 'none';
     // 첫 스핀이 아니면 광고 문구
     if (spun) {
-      document.getElementById('dcDesc').textContent = '묻고 더블로 가시겠습니까?';
     } else {
-      document.getElementById('dcDesc').textContent = '묻고 더블로 가시겠습니까?';
     }
     document.getElementById('dcOverlay').classList.add('show');
     document.getElementById('dcModal').classList.add('show');
@@ -1172,25 +1228,63 @@
     const img = document.getElementById('dcImg');
     const result = document.getElementById('dcResult');
     const closeBtn = document.getElementById('dcClose');
+    const coinScene = document.getElementById('dcCoinScene');
+    const coin = document.getElementById('dcCoin');
+    const coinWrap = document.getElementById('dcCoinWrap');
 
     btns.style.display = 'none';
+    img.style.display = 'none';
+    coinScene.style.display = 'block';
 
-    if (win) {
-      dcReward *= 2;
-      img.textContent = '×2';
-      img.className = 'dc-img win';
-      result.textContent = '🎉 +' + dcReward + ' 미르 획득!';
-      result.className = 'dc-result-text win';
-      confetti();
-    } else {
-      dcReward = 0;
-      img.textContent = '×0';
-      img.className = 'dc-img lose';
-      result.textContent = '😢 아쉽게 실패...';
-      result.className = 'dc-result-text lose';
+    // 동전 뒤집기 물리
+    const totalSpins = 8;
+    const totalDeg = totalSpins * 360;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    function animateCoin(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const tNorm = t * 2 - 1;
+      const y = -(1 - tNorm * tNorm) * 40;
+      const easeOut = 1 - Math.pow(1 - t, 3);
+      const rot = easeOut * totalDeg;
+      const wobble = Math.sin(t * Math.PI * 6) * (1 - t) * 6;
+
+      coin.style.transform = `rotateX(${rot}deg) rotateZ(${wobble}deg)`;
+      coinWrap.style.transform = `translateY(${y}px)`;
+
+      if (t < 1) {
+        requestAnimationFrame(animateCoin);
+      } else {
+        // 착지 후 결과 표시
+        const front = coin.querySelector('.front');
+        if (win) {
+          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%), linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73)';
+          front.querySelector('.val').textContent = '×2';
+          front.querySelector('.lbl').textContent = 'WIN';
+          dcReward *= 2;
+          setTimeout(() => {
+            result.textContent = '🎉 +' + dcReward + ' 미르 획득!';
+            result.className = 'dc-result-text win';
+            closeBtn.style.display = 'block';
+            confetti();
+          }, 300);
+        } else {
+          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%), linear-gradient(160deg, #ff8a8a, #ff6363, #e04040)';
+          front.querySelector('.val').textContent = '×0';
+          front.querySelector('.lbl').textContent = '꽝!';
+          front.style.boxShadow = '0 0 0 4px #e04040, inset 0 2px 6px rgba(255,255,255,0.2)';
+          dcReward = 0;
+          setTimeout(() => {
+            result.textContent = '😢 아쉽게 실패...';
+            result.className = 'dc-result-text lose';
+            closeBtn.style.display = 'block';
+          }, 300);
+        }
+      }
     }
-
-    closeBtn.style.display = 'block';
+    requestAnimationFrame(animateCoin);
   }
 
   function keepMir() {
