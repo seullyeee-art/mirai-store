@@ -520,6 +520,26 @@
     white-space: nowrap; flex-shrink: 0; min-width: 64px;
   }
   .abtn:active { background: rgba(255,255,255,0.1); transform: scale(0.96); }
+
+  /* ═══ TOAST ═══ */
+  .toast {
+    position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+    padding: 12px 24px; border-radius: 12px;
+    background: var(--bg-card-alt); border: 1px solid var(--line-solid);
+    color: var(--label-strong); font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+    z-index: 9999; transition: top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+  }
+  .toast.show { top: 56px; }
+  .toast .toast-mir { color: var(--primary); }
+
+  /* aitem hide animation */
+  .aitem.hiding {
+    max-height: 0; padding: 0 16px; opacity: 0; border: none;
+    transition: all 0.35s ease;
+    overflow: hidden;
+  }
   .abtn svg { width: 14px; height: 14px; }
 
   /* ═══ HISTORY ═══ */
@@ -817,33 +837,33 @@
 
   <!-- Actions -->
   <div class="alist ai d10">
-    <div class="aitem">
+    <div class="aitem" id="action-invite">
       <div class="ainfo">
         <div class="at">친구를 초대하기</div>
         <div class="ar"><svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mg)"/></svg>최대 200 미르 획득 가능</div>
       </div>
-      <button class="abtn">지금 초대</button>
+      <button class="abtn" onclick="claimAction(this, '친구 초대 완료!', 200)">지금 초대</button>
     </div>
-    <div class="aitem">
+    <div class="aitem" id="action-twitter">
       <div class="ainfo">
         <div class="at">트위터에 팔로우</div>
         <div class="ar"><svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mg)"/></svg>+3</div>
       </div>
-      <button class="abtn">열기</button>
+      <button class="abtn" onclick="claimAction(this, '트위터 팔로우 완료!', 3)">열기</button>
     </div>
-    <div class="aitem">
+    <div class="aitem" id="action-discord">
       <div class="ainfo">
         <div class="at">Discord 커뮤니티에 가입하기</div>
         <div class="ar"><svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mg)"/></svg>+3</div>
       </div>
-      <button class="abtn">열기</button>
+      <button class="abtn" onclick="claimAction(this, 'Discord 가입 완료!', 3)">열기</button>
     </div>
-    <div class="aitem">
+    <div class="aitem" id="action-notif">
       <div class="ainfo">
         <div class="at">알림 엑세스 활성화</div>
         <div class="ar"><svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mg)"/></svg>+3</div>
       </div>
-      <button class="abtn">열기</button>
+      <button class="abtn" onclick="claimAction(this, '알림 활성화 완료!', 3)">열기</button>
     </div>
   </div>
 
@@ -868,6 +888,33 @@
     p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;opacity:${o};background:rgba(${c},0.7);box-shadow:0 0 ${s*3}px rgba(${c},0.4);animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*6}s`;
     pc.appendChild(p);
   }
+  // ═══ TOAST ═══
+  function showToast(msg, mir) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `${msg} <span class="toast-mir">+${mir} 미르</span>`;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => t.classList.add('show'));
+    });
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 400);
+    }, 2500);
+  }
+
+  function claimAction(btn, msg, mir) {
+    const item = btn.closest('.aitem');
+    showToast(msg, mir);
+    // Set max-height for smooth collapse
+    item.style.maxHeight = item.scrollHeight + 'px';
+    item.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => item.classList.add('hiding'));
+    });
+    setTimeout(() => item.remove(), 400);
+  }
+
   function confetti() {
     const container = document.querySelector('.roulette-wrap');
     const rect = container.getBoundingClientRect();
@@ -1013,6 +1060,7 @@
       resultMir.textContent = '+' + reward;
       overlay.classList.add('show');
       confetti();
+      showToast('룰렛 당첨!', reward);
 
       // Mark today done
       const todayDay = document.querySelector('.day.now');
