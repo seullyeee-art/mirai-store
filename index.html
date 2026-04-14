@@ -1123,6 +1123,9 @@
     const targetDeg = -segCenter + jitter;
     const finalRotation = currentRotation + spins * 360 + targetDeg - (currentRotation % 360) + 360;
 
+    // GO 텍스트 숨기기
+    document.querySelector('.wheel-center span').style.opacity = '0';
+
     wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
     wheel.style.transform = `rotate(${finalRotation}deg)`;
     currentRotation = finalRotation;
