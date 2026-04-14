@@ -778,9 +778,9 @@
   }
   .dc-coin .front {
     background:
-      radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%),
-      linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73);
-    box-shadow: 0 0 0 4px #0e9b73, inset 0 2px 6px rgba(255,255,255,0.25);
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%),
+      linear-gradient(160deg, #ffd700, #daa520, #b8860b);
+    box-shadow: 0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3);
   }
   .dc-coin .front::before {
     content: ''; position: absolute; inset: 8px;
@@ -1205,8 +1205,8 @@
     document.getElementById('dcCoinScene').style.display = 'none';
     // 동전 리셋
     const fc = document.querySelector('.dc-coin .front');
-    fc.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%), linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73)';
-    fc.style.boxShadow = '0 0 0 4px #0e9b73, inset 0 2px 6px rgba(255,255,255,0.25)';
+    fc.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
+    fc.style.boxShadow = '0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3)';
     fc.querySelector('.val').textContent = '×2';
     fc.querySelector('.lbl').textContent = 'WIN';
     document.getElementById('dcCoin').style.transform = '';
@@ -1261,7 +1261,7 @@
         // 착지 후 결과 표시
         const front = coin.querySelector('.front');
         if (win) {
-          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 50%), linear-gradient(160deg, #2eeaaa, #14c391, #0e9b73)';
+          front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
           front.querySelector('.val').textContent = '×2';
           front.querySelector('.lbl').textContent = 'WIN';
           dcReward *= 2;
