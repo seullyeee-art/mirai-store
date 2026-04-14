@@ -1207,9 +1207,11 @@
   // ═══ TOAST ═══
   // ═══ DOUBLE CHANCE ═══
   let dcReward = 0;
+  let dcDoubleCount = 0;
 
   function showDouble(reward) {
     dcReward = reward;
+    dcDoubleCount = 0;
     document.getElementById('dcImg').innerHTML = '<img src="images/x2.png" width="200" height="100" alt="×2" style="object-fit:contain;">';
     document.getElementById('dcImg').className = 'dc-img';
     document.getElementById('dcImg').style.display = '';
@@ -1287,16 +1289,22 @@
           front.querySelector('.val').textContent = '×2';
           front.querySelector('.lbl').textContent = 'WIN';
           dcReward *= 2;
+          dcDoubleCount++;
           setTimeout(() => {
             result.textContent = '🎉 +' + dcReward + ' 미르!';
             result.className = 'dc-result-text win';
             confetti();
-            // 따따블 선택지
-            btns.innerHTML = `
-              <button class="dc-btn-double" onclick="tryDouble()">🔥 따따블! (×${dcReward * 2} 미르)</button>
-              <button class="dc-btn-keep" onclick="keepMir()">그만 받기 (+${dcReward} 미르)</button>
-            `;
-            btns.style.display = 'flex';
+            if (dcDoubleCount < 2) {
+              // 따따블 선택지
+              btns.innerHTML = `
+                <button class="dc-btn-double" onclick="tryDouble()">🔥 따따블! (×${dcReward * 2} 미르)</button>
+                <button class="dc-btn-keep" onclick="keepMir()">그만 받기 (+${dcReward} 미르)</button>
+              `;
+              btns.style.display = 'flex';
+            } else {
+              // 따따블 끝
+              closeBtn.style.display = 'block';
+            }
           }, 300);
         } else {
           front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%), linear-gradient(160deg, #ff8a8a, #ff6363, #e04040)';
