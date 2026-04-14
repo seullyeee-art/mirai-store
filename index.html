@@ -793,11 +793,11 @@
     <div class="days">
       <div class="day done">
         <svg width="20" height="20" viewBox="0 0 32 32"><polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="day-l">Day 1</span>
+        <span class="day-n">완료</span><span class="day-l">Day 1</span>
       </div>
       <div class="day done">
         <svg width="20" height="20" viewBox="0 0 32 32"><polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="day-l">Day 2</span>
+        <span class="day-n">완료</span><span class="day-l">Day 2</span>
       </div>
       <div class="day now">
         <svg width="20" height="20" viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="white" opacity=".9"/></svg>
@@ -1101,7 +1101,7 @@
         todayDay.classList.remove('now');
         todayDay.classList.add('done');
         const dayN = todayDay.querySelector('.day-n');
-        if (dayN) dayN.remove();
+        if (dayN) dayN.textContent = '완료';
         todayDay.querySelector('svg').innerHTML = '<polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
       }
 
