@@ -50,16 +50,19 @@
   body {
     font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
     min-height: 100dvh;
-    background: var(--bg-normal-alt);
+    background: var(--bg-normal);
     display: flex; justify-content: center;
     overflow-x: hidden;
     color: var(--label-normal);
   }
 
   .phone-frame {
-    width: 100%; max-width: 430px;
+    width: 100%; max-width: 960px;
     min-height: 100dvh;
-    background: var(--bg-normal);
+    background:
+      radial-gradient(ellipse 500px 500px at 30% 5%, rgba(20, 195, 145, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 400px 400px at 80% 15%, rgba(40, 208, 237, 0.1) 0%, transparent 60%),
+      var(--bg-normal);
     padding-bottom: 40px;
   }
 
@@ -75,8 +78,8 @@
   }
   .back-btn {
     width: 40px; height: 40px; border-radius: 50%;
-    border: 1px solid var(--line-solid-normal);
-    background: var(--fill-alternative);
+    border: none;
+    background: rgba(255,255,255,0.06);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all 0.2s;
     color: var(--label-normal); text-decoration: none;
@@ -86,13 +89,14 @@
   .header-title {
     font-size: 17px; font-weight: 700;
     color: var(--label-strong); letter-spacing: -0.3px;
+    position: absolute; left: 50%; transform: translateX(-50%);
   }
 
   .mir-balance {
     display: flex; align-items: center; gap: 6px;
-    background: var(--fill-normal);
+    background: rgba(255,255,255,0.06);
     padding: 6px 14px 6px 8px; border-radius: 20px;
-    border: 1px solid var(--line-solid-normal);
+    border: none;
   }
   .mir-balance span { font-size: 14px; font-weight: 700; color: var(--primary-normal); }
   .mir-glow { filter: drop-shadow(0 2px 6px rgba(20, 195, 145, 0.4)); }
@@ -143,9 +147,9 @@
   .task-item {
     display: flex; align-items: center;
     padding: 16px;
-    background: var(--fill-alternative);
+    background: linear-gradient(160deg, #28282b, #222224);
     border-radius: 16px;
-    border: 1px solid var(--line-solid-normal);
+    border: 1px solid #333335;
     gap: 12px;
     transition: all 0.2s;
     cursor: pointer;
@@ -176,8 +180,8 @@
 
   .task-btn {
     padding: 8px 16px; border-radius: 10px;
-    border: 1px solid var(--line-solid-normal);
-    background: var(--fill-normal);
+    border: none;
+    background: rgba(255,255,255,0.06);
     font-family: inherit; font-size: 12px; font-weight: 600;
     color: var(--label-normal); cursor: pointer;
     transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
@@ -206,6 +210,20 @@
   .d8 { animation-delay: 0.34s; }
   .d9 { animation-delay: 0.38s; }
   .d10 { animation-delay: 0.42s; }
+
+  /* ═══ DESKTOP ═══ */
+  @media (min-width: 768px) {
+    .phone-frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
+    .header { padding: 20px 40px 14px; }
+    .header-title { font-size: 20px; }
+    .progress-section { padding: 24px 0 20px; }
+    .progress-title { font-size: 20px; }
+    .task-list { padding: 0; gap: 10px; }
+    .task-item { padding: 20px; border-radius: 18px; }
+    .task-name { font-size: 16px; }
+    .task-reward { font-size: 14px; }
+    .task-btn { padding: 10px 20px; font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -219,22 +237,7 @@
     </a>
     <span class="header-title">일일 작업</span>
     <div class="mir-balance">
-      <svg class="mir-glow" width="22" height="22" viewBox="0 0 32 32">
-        <defs>
-          <linearGradient id="mirG" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#5fffcf"/>
-            <stop offset="40%" style="stop-color:#14c391"/>
-            <stop offset="100%" style="stop-color:#0e9b73"/>
-          </linearGradient>
-          <linearGradient id="mirS" x1="20%" y1="0%" x2="80%" y2="100%">
-            <stop offset="0%" style="stop-color:rgba(255,255,255,0.55)"/>
-            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
-          </linearGradient>
-        </defs>
-        <polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/>
-        <polygon points="16,3 20,10 16,26 12,10" fill="url(#mirS)"/>
-        <polygon points="16,3 6,10 12,10" fill="rgba(255,255,255,0.2)"/>
-      </svg>
+      <img src="images/mir.png" width="22" height="22" alt="미르" style="object-fit:contain;">
       <span>95</span>
     </div>
   </header>
@@ -248,10 +251,7 @@
         <div class="progress-fill" id="progressFill" style="width: 0%"></div>
       </div>
       <div class="progress-reward">
-        <svg class="mir-glow" width="20" height="20" viewBox="0 0 32 32">
-          <polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/>
-          <polygon points="16,3 20,10 16,26 12,10" fill="url(#mirS)"/>
-        </svg>
+        <img src="images/mir.png" width="20" height="20" alt="미르" style="object-fit:contain;">
         <span>30</span>
       </div>
     </div>
@@ -264,7 +264,7 @@
       <div class="task-info">
         <div class="task-name">대화 10라운드 완료</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +3
         </div>
       </div>
@@ -275,7 +275,7 @@
       <div class="task-info">
         <div class="task-name">대화 30라운드 완료</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +8
         </div>
       </div>
@@ -286,7 +286,7 @@
       <div class="task-info">
         <div class="task-name">대화 50라운드 완료</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +15
         </div>
       </div>
@@ -297,7 +297,7 @@
       <div class="task-info">
         <div class="task-name">호감도 레벨 5회 업그레이드</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +10
         </div>
       </div>
@@ -308,7 +308,7 @@
       <div class="task-info">
         <div class="task-name">호감도 레벨 15회 업그레이드</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +20
         </div>
       </div>
@@ -319,7 +319,7 @@
       <div class="task-info">
         <div class="task-name">채팅 중 선물 3개 열기</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +10
         </div>
       </div>
@@ -330,7 +330,7 @@
       <div class="task-info">
         <div class="task-name">오늘 아무 미르 패키나 구매하기</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +15
         </div>
       </div>
@@ -341,7 +341,7 @@
       <div class="task-info">
         <div class="task-name">모든 일일 작업 완료 보너스</div>
         <div class="task-reward">
-          <svg viewBox="0 0 32 32"><polygon points="16,3 26,10 24,26 8,26 6,10" fill="url(#mirG)"/></svg>
+          <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain;">
           +35
         </div>
       </div>
