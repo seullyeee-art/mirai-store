@@ -137,15 +137,16 @@
       linear-gradient(145deg, var(--bg-card-alt), var(--bg-card));
     border: 1px solid rgba(20,195,145,0.1);
   }
-  .max-badge-img {
+  .max-badge-img { display: none; }
+  .max-card::after {
+    content: '';
     position: absolute;
-    right: -8px; top: -22px;
-    width: 80px; height: 80px;
-    object-fit: contain;
-    transform: rotate(15deg);
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    right: -20px; top: -10px;
+    width: 180px; height: 180px;
+    background: url('images/max.png') no-repeat center;
+    background-size: contain;
+    opacity: 0.07;
     pointer-events: none;
-    z-index: 2;
   }
   .max-top { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
   .max-icon {
