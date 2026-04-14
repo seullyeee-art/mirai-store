@@ -622,11 +622,17 @@
   }
   .bs-btn {
     width: 100%; padding: 14px; border-radius: 12px; border: none;
-    background: rgba(255,255,255,0.06);
+    background: var(--label-strong);
     font-family: inherit; font-size: 15px; font-weight: 700;
-    color: var(--label-strong); cursor: pointer; transition: all 0.2s;
+    color: var(--bg-deep); cursor: pointer; transition: all 0.2s;
   }
-  .bs-btn:active { transform: scale(0.98); background: rgba(255,255,255,0.1); }
+  .bs-btn:active { transform: scale(0.98); opacity: 0.9; }
+  .bs-btn-sub {
+    width: 100%; padding: 12px; margin-top: 8px;
+    border: none; background: none;
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    color: var(--label-alt); cursor: pointer;
+  }
 
   /* ═══ TOAST ═══ */
   .toast {
@@ -696,14 +702,11 @@
 <div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
 <div class="bs" id="bsSheet">
   <div class="bs-handle"></div>
-  <div class="bs-icon">🎰</div>
-  <div class="bs-title">오늘의 룰렛 완료!</div>
-  <div class="bs-sub">내일 다시 돌려보세요</div>
-  <div class="bs-total">
-    <img class="mi" src="images/mir.png" width="24" height="24" alt="미르">
-    <span id="bsTotal">+0 미르 획득</span>
-  </div>
-  <button class="bs-btn" onclick="closeSheet()">확인</button>
+  <div class="bs-title">다음에 또 받을 수 있어요</div>
+  <div class="bs-sub">충전되었을 때 알려드릴까요?</div>
+  <div class="bs-icon">🔔</div>
+  <button class="bs-btn" onclick="closeSheet()">동의하고 알림받기</button>
+  <button class="bs-btn-sub" onclick="closeSheet()">괜찮아요</button>
 </div>
 
 <div class="frame">
