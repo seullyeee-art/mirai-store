@@ -1239,7 +1239,18 @@
 
     btns.style.display = 'none';
     img.style.display = 'none';
+    result.textContent = '';
+    result.className = 'dc-result-text';
     coinScene.style.display = 'block';
+
+    // 동전 리셋
+    const frontReset = coin.querySelector('.front');
+    frontReset.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 50%), linear-gradient(160deg, #ffd700, #daa520, #b8860b)';
+    frontReset.style.boxShadow = '0 0 0 4px #b8860b, inset 0 2px 6px rgba(255,255,255,0.3)';
+    frontReset.querySelector('.val').textContent = '×2';
+    frontReset.querySelector('.lbl').textContent = 'WIN';
+    coin.style.transform = '';
+    coinWrap.style.transform = '';
 
     // 동전 뒤집기 물리
     const totalSpins = 8;
@@ -1270,10 +1281,15 @@
           front.querySelector('.lbl').textContent = 'WIN';
           dcReward *= 2;
           setTimeout(() => {
-            result.textContent = '🎉 +' + dcReward + ' 미르 획득!';
+            result.textContent = '🎉 +' + dcReward + ' 미르!';
             result.className = 'dc-result-text win';
-            closeBtn.style.display = 'block';
             confetti();
+            // 따따블 선택지
+            btns.innerHTML = `
+              <button class="dc-btn-double" onclick="tryDouble()">🔥 따따블! (×${dcReward * 2} 미르)</button>
+              <button class="dc-btn-keep" onclick="keepMir()">그만 받기 (+${dcReward} 미르)</button>
+            `;
+            btns.style.display = 'flex';
           }, 300);
         } else {
           front.style.background = 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%), linear-gradient(160deg, #ff8a8a, #ff6363, #e04040)';
