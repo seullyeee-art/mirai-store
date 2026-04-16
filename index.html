@@ -973,7 +973,6 @@
   <input class="cv-input" id="cvInput" type="number" value="0" min="0">
   <div class="cv-chips">
     <button class="cv-chip active" onclick="cvSet('all')">전체입력</button>
-    <button class="cv-chip" onclick="cvAdd(10)">+10</button>
     <button class="cv-chip" onclick="cvAdd(100)">+100</button>
     <button class="cv-chip" onclick="cvAdd(1000)">+1,000</button>
     <button class="cv-chip" onclick="cvAdd(5000)">+5,000</button>
@@ -1260,12 +1259,12 @@
       </div>
       <button class="abtn" onclick="claimAction(this, '알림 활성화 완료!', 3)">열기</button>
     </div>
-  </div>
-
-  <!-- 인센티브 전환 -->
-  <div class="hist ai d11">
-    <span class="tt">인센티브 → 미르 전환</span>
-    <button class="vb" onclick="document.getElementById('convertOverlay').classList.add('show');document.getElementById('convertModal').classList.add('show');">전환하기</button>
+    <div class="aitem">
+      <div class="ainfo">
+        <div class="at">인센티브를 미르로 전환하기</div>
+      </div>
+      <button class="abtn" onclick="document.getElementById('convertOverlay').classList.add('show');document.getElementById('convertModal').classList.add('show');">전환하기</button>
+    </div>
   </div>
 
   <!-- History + 구독관리 -->
