@@ -834,6 +834,78 @@
   }
   .dc-sub2 strong { color: var(--primary); }
 
+  /* ═══ CONVERT MODAL ═══ */
+  .cv-overlay {
+    position: fixed; inset: 0; z-index: 9998;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .cv-overlay.show { opacity: 1; pointer-events: auto; }
+  .cv {
+    position: fixed; bottom: 0; left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 100%; max-width: 430px;
+    background: var(--bg-card-alt);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 24px 36px;
+    z-index: 9999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .cv.show { transform: translateX(-50%) translateY(0); }
+  .cv-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .cv-title { font-size: 17px; font-weight: 800; color: var(--label-strong); }
+  .cv-close {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: none; background: rgba(255,255,255,0.06);
+    color: var(--label-alt); font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .cv-info {
+    font-size: 13px; color: var(--label-alt); margin-bottom: 16px;
+  }
+  .cv-info strong { color: var(--label-neutral); }
+  .cv-input {
+    width: 100%; padding: 14px 16px;
+    border-radius: 12px; border: 1px solid var(--line-solid);
+    background: rgba(255,255,255,0.04);
+    font-family: inherit; font-size: 18px; font-weight: 700;
+    color: var(--label-strong);
+    margin-bottom: 12px; outline: none;
+  }
+  .cv-input:focus { border-color: var(--primary); }
+  .cv-chips {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .cv-chip {
+    padding: 6px 14px; border-radius: 8px;
+    border: 1px solid var(--line-solid);
+    background: rgba(255,255,255,0.04);
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--label-normal); cursor: pointer;
+  }
+  .cv-chip.active { background: rgba(255,255,255,0.1); color: var(--label-strong); }
+  .cv-result {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .cv-result span { font-size: 13px; color: var(--label-alt); }
+  .cv-mir {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 15px; font-weight: 700; color: var(--label-strong);
+  }
+  .cv-btn {
+    width: 100%; padding: 14px;
+    border-radius: 12px; border: none;
+    background: linear-gradient(135deg, #14c391, #1ae0a8);
+    font-family: inherit; font-size: 16px; font-weight: 700;
+    color: #fff; cursor: pointer;
+  }
+  .cv-btn:active { transform: scale(0.98); opacity: 0.9; }
+
   /* ═══ DESKTOP ═══ */
   @media (min-width: 768px) {
     .frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
@@ -889,6 +961,30 @@
 <body>
 
 <div class="particles" id="pts"></div>
+
+<!-- Convert Modal -->
+<div class="cv-overlay" id="convertOverlay" onclick="this.classList.remove('show');document.getElementById('convertModal').classList.remove('show');"></div>
+<div class="cv" id="convertModal">
+  <div class="cv-header">
+    <span class="cv-title">인센티브를 미르로 전환하기</span>
+    <button class="cv-close" onclick="document.getElementById('convertOverlay').classList.remove('show');document.getElementById('convertModal').classList.remove('show');">✕</button>
+  </div>
+  <div class="cv-info">ⓘ 보유 인센티브: <strong>0개</strong></div>
+  <input class="cv-input" id="cvInput" type="number" value="0" min="0">
+  <div class="cv-chips">
+    <button class="cv-chip active" onclick="cvSet('all')">전체입력</button>
+    <button class="cv-chip" onclick="cvAdd(10)">+10</button>
+    <button class="cv-chip" onclick="cvAdd(100)">+100</button>
+    <button class="cv-chip" onclick="cvAdd(1000)">+1,000</button>
+    <button class="cv-chip" onclick="cvAdd(5000)">+5,000</button>
+    <button class="cv-chip" onclick="cvAdd(10000)">+10,000</button>
+  </div>
+  <div class="cv-result">
+    <span>전환 될 미르</span>
+    <span class="cv-mir"><img src="images/mir.png" width="16" height="16" alt="미르" style="object-fit:contain;"> 총 <strong id="cvMir">0</strong>개</span>
+  </div>
+  <button class="cv-btn">전환하기</button>
+</div>
 
 <!-- Double Chance -->
 <div class="dc-overlay" id="dcOverlay"></div>
@@ -1166,6 +1262,12 @@
     </div>
   </div>
 
+  <!-- 인센티브 전환 -->
+  <div class="hist ai d11">
+    <span class="tt">인센티브 → 미르 전환</span>
+    <button class="vb" onclick="document.getElementById('convertOverlay').classList.add('show');document.getElementById('convertModal').classList.add('show');">전환하기</button>
+  </div>
+
   <!-- History + 구독관리 -->
   <div class="hist-row ai d11">
     <div class="hist">
@@ -1402,6 +1504,21 @@
     const t = document.getElementById('maxToggle');
     t.childNodes[0].textContent = t.classList.contains('open') ? '접기 ' : '혜택 보기 ';
   }
+
+  // Convert
+  function cvAdd(n) {
+    const inp = document.getElementById('cvInput');
+    inp.value = parseInt(inp.value || 0) + n;
+    document.getElementById('cvMir').textContent = inp.value;
+  }
+  function cvSet(mode) {
+    const inp = document.getElementById('cvInput');
+    inp.value = 0;
+    document.getElementById('cvMir').textContent = '0';
+  }
+  document.getElementById('cvInput').addEventListener('input', function() {
+    document.getElementById('cvMir').textContent = this.value || '0';
+  });
 
   // MAX 타이머 (24시간 카운트다운)
   let maxSeconds = 24 * 60 * 60;
