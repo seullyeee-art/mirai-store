@@ -972,7 +972,6 @@
   <div class="cv-info">ⓘ 보유 인센티브: <strong>0개</strong></div>
   <input class="cv-input" id="cvInput" type="number" value="0" min="0">
   <div class="cv-chips">
-    <button class="cv-chip active" onclick="cvSet('all')">전체입력</button>
     <button class="cv-chip" onclick="cvAdd(100)">+100</button>
     <button class="cv-chip" onclick="cvAdd(1000)">+1,000</button>
     <button class="cv-chip" onclick="cvAdd(5000)">+5,000</button>
@@ -1509,11 +1508,6 @@
     const inp = document.getElementById('cvInput');
     inp.value = parseInt(inp.value || 0) + n;
     document.getElementById('cvMir').textContent = inp.value;
-  }
-  function cvSet(mode) {
-    const inp = document.getElementById('cvInput');
-    inp.value = 0;
-    document.getElementById('cvMir').textContent = '0';
   }
   document.getElementById('cvInput').addEventListener('input', function() {
     document.getElementById('cvMir').textContent = this.value || '0';
