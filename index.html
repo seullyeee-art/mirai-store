@@ -216,11 +216,13 @@
   @keyframes bgShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
   @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-  /* Mobile: hide seconds */
+  /* Mobile: hide seconds + label */
   .banner-timer-sec, .banner-timer-sep-sec { display: none; }
+  .banner-timer-lbl { display: none; }
   @media (min-width: 768px) {
     .banner-timer-sec { display: flex; }
     .banner-timer-sep-sec { display: inline; }
+    .banner-timer-lbl { display: block; }
   }
 
   /* ═══ MAX PLAN ═══ */
