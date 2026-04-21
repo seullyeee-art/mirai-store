@@ -69,22 +69,23 @@
   /* === HEADER === */
   .header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px 12px;
+    padding: 0 16px;
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     background: rgba(27, 28, 30, 0.8);
     border-bottom: 1px solid var(--line-alternative);
+    height: 56px;
   }
   .back-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: none;
-    background: rgba(255,255,255,0.06);
+    width: 36px; height: 36px;
+    border: none; background: transparent;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s;
-    color: var(--label-normal); text-decoration: none;
+    cursor: pointer; color: var(--label-normal); transition: all 0.2s;
+    padding: 0; margin-left: -8px;
+    text-decoration: none;
   }
-  .back-btn:active { transform: scale(0.92); background: var(--fill-strong); }
+  .back-btn:active { transform: scale(0.88); }
 
   .header-title {
     font-size: 17px; font-weight: 700;
@@ -214,7 +215,7 @@
   /* ═══ DESKTOP ═══ */
   @media (min-width: 768px) {
     .phone-frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
-    .header { padding: 20px 40px 14px; }
+    .header { padding: 0 40px; height: 56px; }
     .header-title { font-size: 20px; }
     .progress-section { padding: 24px 0 20px; }
     .progress-title { font-size: 20px; }
