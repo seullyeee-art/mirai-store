@@ -428,7 +428,7 @@
   }
   .day-n { font-size: 11px; font-weight: 700; color: var(--primary); }
   .day.now .day-n { color: #fff; }
-  .day.done .day-n { color: var(--label-assist); text-decoration: line-through; }
+  .day.done .day-n { color: var(--label-assist); }
   .day-l { font-size: 9px; font-weight: 600; color: var(--label-alt); }
   .day.now .day-l { color: rgba(255,255,255,0.7); }
 
@@ -1294,11 +1294,11 @@
     <div class="days">
       <div class="day done">
         <svg width="20" height="20" viewBox="0 0 32 32"><polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="day-n">완료</span><span class="day-l">Day 1</span>
+        <span class="day-n">+5</span><span class="day-l">Day 1</span>
       </div>
       <div class="day done">
         <svg width="20" height="20" viewBox="0 0 32 32"><polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="day-n">완료</span><span class="day-l">Day 2</span>
+        <span class="day-n">+3</span><span class="day-l">Day 2</span>
       </div>
       <div class="day now">
         <img src="images/mir.png" width="20" height="20" alt="미르" style="object-fit:contain;">
@@ -1796,7 +1796,7 @@
         todayDay.classList.remove('now');
         todayDay.classList.add('done');
         const dayN = todayDay.querySelector('.day-n');
-        if (dayN) dayN.textContent = '완료';
+        if (dayN) dayN.textContent = '+' + reward;
         todayDay.querySelector('svg').innerHTML = '<polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
       }
 
