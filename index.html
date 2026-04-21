@@ -1563,6 +1563,14 @@
   function closeDouble() {
     document.getElementById('dcOverlay').classList.remove('show');
     document.getElementById('dcModal').classList.remove('show');
+    // 룰렛 버튼 상태 강제 리셋
+    const txt = document.getElementById('rouletteTxt');
+    const btn = document.getElementById('rouletteBtn');
+    if (txt && btn) {
+      btn.className = 'dbtn ad-retry';
+      txt.textContent = '🎬 광고보고 다시돌리기 (' + Math.max(0, 3 - adRetries) + '/3)';
+      btn.disabled = false;
+    }
   }
 
   function showToast(msg, mir) {
