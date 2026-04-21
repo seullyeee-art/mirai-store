@@ -306,11 +306,13 @@
   .max-note { font-size: 11px; color: var(--label-assist); margin-top: 10px; text-align: center; }
   .max-cta {
     width: 100%; padding: 12px; border-radius: 10px; border: none;
-    background: rgba(255,255,255,0.06); font-family: inherit;
+    background: rgba(112,115,124,0.22);
+    backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+    font-family: inherit;
     font-size: 14px; font-weight: 600; color: var(--label-normal);
     cursor: pointer; transition: all 0.2s;
   }
-  .max-cta:active { transform: scale(0.98); background: rgba(255,255,255,0.1); }
+  .max-cta:active { transform: scale(0.98); background: rgba(112,115,124,0.32); }
 
   /* ═══ SECTION HEADER ═══ */
   .sec-hd { padding: 16px 16px 8px; display: flex; align-items: center; justify-content: space-between; }
@@ -363,17 +365,18 @@
 
   .pbtn {
     width: 100%; padding: 10px 0; border-radius: 10px;
-    border: none; background: rgba(255,255,255,0.06);
+    border: none; background: rgba(112,115,124,0.22);
+    backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit; font-size: 12px; font-weight: 700;
     color: var(--label-normal); cursor: pointer; transition: all 0.15s;
     margin-top: auto;
   }
-  .pbtn:active { background: rgba(255,255,255,0.1); transform: scale(0.96); }
+  .pbtn:active { background: rgba(112,115,124,0.32); transform: scale(0.96); }
   .prem .pbtn {
-    background: rgba(255,255,255,0.06);
+    background: rgba(112,115,124,0.22);
     color: var(--label-normal); border: none;
   }
-  .prem .pbtn:active { background: rgba(255,255,255,0.1); }
+  .prem .pbtn:active { background: rgba(112,115,124,0.32); }
 
   /* ═══ FREE SECTION ═══ */
   .free-hd {
@@ -586,7 +589,8 @@
   }
   .dbtn:active { transform: scale(0.96); }
   .dbtn.spin {
-    background: rgba(255,255,255,0.06);
+    background: rgba(112,115,124,0.22);
+    backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     color: var(--label-strong);
   }
   .dbtn.spin::before {
@@ -595,7 +599,8 @@
     animation: shimmer 2.5s ease-in-out infinite;
   }
   .dbtn.ad-retry {
-    background: rgba(255,255,255,0.06);
+    background: rgba(112,115,124,0.22);
+    backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     border: none;
     color: var(--label-neutral); font-size: 13px;
   }
