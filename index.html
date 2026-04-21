@@ -124,6 +124,46 @@
   .banner .sub { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8); }
   .banner .main { font-size: 24px; font-weight: 900; color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,0.2); }
   .banner .deco { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 36px; filter: drop-shadow(0 0 12px rgba(255,255,255,0.3)); }
+
+  /* Banner timer — glass pill with segmented digits */
+  .banner-timer {
+    position: absolute; right: 18px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 4px; z-index: 2;
+  }
+  .banner-timer-lbl {
+    font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .banner-timer-digits {
+    display: flex; align-items: center; gap: 3px;
+    background: rgba(0,0,0,0.22);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    padding: 5px 8px; border-radius: 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.15),
+      0 2px 8px rgba(0,0,0,0.15);
+  }
+  .banner-timer-seg {
+    font-family: 'SF Mono', ui-monospace, 'Pretendard Variable', monospace;
+    font-size: 14px; font-weight: 800;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    min-width: 22px; text-align: center;
+    letter-spacing: -0.5px;
+  }
+  .banner-timer-sep {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px; font-weight: 800;
+    animation: bannerColon 1s step-end infinite;
+  }
+  @keyframes bannerColon {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+  }
   @keyframes bgShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
   @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
@@ -1037,7 +1077,16 @@
   <div class="banner ai d1">
     <div class="sub">첫 구독</div>
     <div class="main">20% 할인</div>
-    <div class="deco">✨</div>
+    <div class="banner-timer">
+      <span class="banner-timer-lbl">종료까지</span>
+      <div class="banner-timer-digits">
+        <span class="banner-timer-seg" id="btH">23</span>
+        <span class="banner-timer-sep">:</span>
+        <span class="banner-timer-seg" id="btM">59</span>
+        <span class="banner-timer-sep">:</span>
+        <span class="banner-timer-seg" id="btS">59</span>
+      </div>
+    </div>
   </div>
 
   <!-- 플랜 구매 -->
@@ -1513,18 +1562,24 @@
     document.getElementById('cvMir').textContent = this.value || '0';
   });
 
-  // MAX 타이머 (24시간 카운트다운)
+  // 24시간 카운트다운 (MAX 뱃지 + 배너 타이머 공유)
   let maxSeconds = 24 * 60 * 60;
-  function updateMaxTimer() {
+  const pad = n => String(n).padStart(2, '0');
+  function updateTimers() {
     const h = Math.floor(maxSeconds / 3600);
     const m = Math.floor((maxSeconds % 3600) / 60);
     const s = maxSeconds % 60;
-    document.getElementById('maxTimer').textContent =
-      String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    document.getElementById('maxTimer').textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+    const btH = document.getElementById('btH');
+    const btM = document.getElementById('btM');
+    const btS = document.getElementById('btS');
+    if (btH) btH.textContent = pad(h);
+    if (btM) btM.textContent = pad(m);
+    if (btS) btS.textContent = pad(s);
     if (maxSeconds > 0) maxSeconds--;
   }
-  updateMaxTimer();
-  setInterval(updateMaxTimer, 1000);
+  updateTimers();
+  setInterval(updateTimers, 1000);
 
   function pop(el) {
     el.style.animation='none'; el.offsetHeight;
