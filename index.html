@@ -1026,7 +1026,7 @@
     <div class="max-top">
       <img src="images/380.png" width="28" height="28" alt="왕관" style="object-fit:contain;">
       <span class="max-name">MAX</span>
-      <span class="max-timer-badge">첫구독 할인 <span id="maxTimer">24:00:00</span></span>
+      <span class="max-timer-badge">첫구독 20% 할인</span>
     </div>
     <div class="max-tags">
       <span class="max-tag">💬 무제한 대화 (성능에 특화)</span>
@@ -1373,7 +1373,6 @@
     const h = Math.floor(maxSeconds / 3600);
     const m = Math.floor((maxSeconds % 3600) / 60);
     const s = maxSeconds % 60;
-    document.getElementById('maxTimer').textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
     const btH = document.getElementById('btH');
     const btM = document.getElementById('btM');
     const btS = document.getElementById('btS');
