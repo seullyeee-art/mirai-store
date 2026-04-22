@@ -1496,28 +1496,12 @@
     currentRotation = finalRotation;
 
     setTimeout(() => {
-      // Show result
-      resultMir.textContent = '+' + reward;
-      overlay.classList.add('show');
-      confetti();
-      totalMirEarned += reward;
+      // 버튼 상태 먼저 업데이트 (이후 에러 나도 버튼은 복구됨)
       const isFirstSpin = !spun;
-      if (isFirstSpin) spun = true;
-      showToast('룰렛 당첨!', reward);
-
-      // Mark today done
-      const todayDay = document.querySelector('.day.now');
-      if (todayDay) {
-        todayDay.classList.remove('now');
-        todayDay.classList.add('done');
-        const dayN = todayDay.querySelector('.day-n');
-        if (dayN) dayN.textContent = '+' + reward;
-        todayDay.querySelector('svg').innerHTML = '<polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
-      }
-
       spinning = false;
 
       if (isFirstSpin) {
+        spun = true;
         btn.className = 'dbtn ad-retry';
         txt.textContent = '🎬 광고보고 다시돌리기 (0/3)';
         btn.disabled = false;
@@ -1526,7 +1510,32 @@
         if (adRetries <= 0) {
           txt.textContent = '오늘 완료!';
           btn.style.opacity = '0.5';
-          // 바텀시트 + 룰렛 숨김
+        } else {
+          txt.textContent = '🎬 광고보고 다시돌리기 (' + (3 - adRetries) + '/3)';
+          btn.disabled = false;
+        }
+      }
+
+      // 결과 연출 (실패해도 버튼은 이미 복구됨)
+      try {
+        resultMir.textContent = '+' + reward;
+        overlay.classList.add('show');
+        confetti();
+        totalMirEarned += reward;
+        showToast('룰렛 당첨!', reward);
+
+        // Mark today done
+        const todayDay = document.querySelector('.day.now');
+        if (todayDay) {
+          todayDay.classList.remove('now');
+          todayDay.classList.add('done');
+          const dayN = todayDay.querySelector('.day-n');
+          if (dayN) dayN.textContent = '+' + reward;
+          todayDay.querySelector('svg').innerHTML = '<polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+        }
+
+        // 3회 소진 시 룰렛 숨김
+        if (!isFirstSpin && adRetries <= 0) {
           setTimeout(() => {
             showSheet();
             const wrap = document.querySelector('.roulette-wrap');
@@ -1536,10 +1545,9 @@
             wrap.style.margin = '0';
             wrap.style.overflow = 'hidden';
           }, 1500);
-          return;
         }
-        txt.textContent = '🎬 광고보고 다시돌리기 (' + (3 - adRetries) + '/3)';
-        btn.disabled = false;
+      } catch (e) {
+        console.error('룰렛 연출 에러:', e);
       }
     }, 4200);
   }
