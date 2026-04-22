@@ -972,7 +972,7 @@
   <div class="bs-title">다음에 또 받을 수 있어요</div>
   <div class="bs-sub">충전되었을 때 알려드릴까요?</div>
   <div class="bs-icon">🔔</div>
-  <button class="bs-btn" onclick="closeSheet()">동의하고 알림받기</button>
+  <button class="bs-btn" onclick="agreeNotification()">동의하고 알림받기</button>
   <button class="bs-btn-sub" onclick="closeSheet()">괜찮아요</button>
 </div>
 
@@ -1289,7 +1289,7 @@
   function showToast(msg, mir) {
     const t = document.createElement('div');
     t.className = 'toast';
-    t.innerHTML = `${msg} <span class="toast-mir">+${mir} 미르</span>`;
+    t.innerHTML = mir != null ? `${msg} <span class="toast-mir">+${mir} 미르</span>` : msg;
     document.body.appendChild(t);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => t.classList.add('show'));
@@ -1453,6 +1453,10 @@
   function closeSheet() {
     document.getElementById('bsOverlay').classList.remove('show');
     document.getElementById('bsSheet').classList.remove('show');
+  }
+  function agreeNotification() {
+    closeSheet();
+    showToast('알림 수신이 동의되었습니다');
   }
 
   function spinRoulette() {
