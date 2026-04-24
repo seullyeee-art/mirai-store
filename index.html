@@ -10,33 +10,33 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   :root {
+    /* Brand */
     --primary: #14c391;
-    --primary-strong: #14c092;
     --primary-heavy: #0fa87d;
     --primary-glow: rgba(20, 195, 145, 0.35);
+    --mint-light: #5fffcf;
+    --cyan: #28d0ed;
 
+    /* Label (text) */
     --label-strong: #ffffff;
     --label-normal: #f7f7f8;
     --label-neutral: rgba(194, 196, 200, 0.88);
     --label-alt: rgba(174, 176, 182, 0.61);
     --label-assist: rgba(174, 176, 182, 0.28);
 
+    /* Background */
     --bg-deep: #0f0f10;
     --bg-base: #1b1c1e;
     --bg-card: #222224;
     --bg-card-alt: #28282b;
 
+    /* Line */
     --line: rgba(20, 195, 145, 0.08);
     --line-solid: #333335;
-    --line-glow: rgba(20, 195, 145, 0.15);
 
-    --fill: rgba(20, 195, 145, 0.06);
-    --fill-strong: rgba(20, 195, 145, 0.1);
-
+    /* Status */
     --negative: #ff6363;
     --cautionary: #ffa938;
-    --cyan: #28d0ed;
-    --mint-light: #5fffcf;
   }
 
   html { font-size: 16px; }
@@ -290,12 +290,6 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
   }
-  .max-crown {
-    position: absolute; top: -4px; right: 12px;
-    font-size: 36px;
-    transform: rotate(15deg);
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
-  }
   .max-tags {
     display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px;
   }
@@ -383,13 +377,6 @@
     display: flex; align-items: center; gap: 6px;
     font-size: 17px; font-weight: 800; color: var(--label-strong);
   }
-  .free-hd .q {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: rgba(255,255,255,0.06); border: none;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: var(--label-alt); font-weight: 700;
-  }
-
   /* ═══ DAILY ROULETTE ═══ */
   .daily {
     margin: 0 16px;
@@ -1110,7 +1097,7 @@
 
   <!-- Free Mir -->
   <div class="free-hd ai d9">
-    무료 미르 충전소 <!-- <span class="q">?</span> -->
+    무료 미르 충전소
   </div>
 
   <!-- Daily Roulette -->
@@ -1384,11 +1371,6 @@
   updateTimers();
   setInterval(updateTimers, 1000);
 
-  function pop(el) {
-    el.style.animation='none'; el.offsetHeight;
-    el.style.animation='pulse .3s ease';
-    setTimeout(()=>el.style.animation='',300);
-  }
 
   // ═══ ROULETTE — build wheel ═══
   const REWARDS = [1, 3, 5, 10, 50];
@@ -1556,6 +1538,5 @@
     }, 4200);
   }
 </script>
-<style>@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}</style>
 </body>
 </html>
